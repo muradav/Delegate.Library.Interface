@@ -52,5 +52,77 @@ namespace Interface.Library.Task.Models
                 
             }
         }
+        
+        public void GetBookById(int? id)
+        {
+            if (id == null)
+            {
+                throw new NullReferenceException("Please enter ID.");
+            }
+            foreach (Books item in books)
+            {
+                if (id==item.ID && item.IsDeleted==false)
+                {
+                    Console.WriteLine(item);
+                    return;
+                }
+            }
+                
+        }
+
+        public void DeleteBookById(int? id)
+        {
+            bool check = false;
+            if (id==null)
+            {
+                throw new NullReferenceException("Please enter ID");
+            }
+            foreach (Books item in books)
+            {
+                if (id==item.ID && item.IsDeleted==false)
+                {
+                    item.IsDeleted = true;
+                    check = true;
+                    return;
+                }
+            }
+            if (check==false)
+            {
+                Exceptions.NotFoundException(id);
+            }
+        }
+
+        public void GetAllBooks()
+        {
+            List<Books> cbooks = new List<Books>();
+            foreach (Books item in cbooks)
+            {
+                Console.WriteLine(item);
+            }
+        }
+
+        public void EditBookName(int? id)
+        {
+            bool check = false;
+            if (id==null)
+            {
+                throw new NullReferenceException("Please enter ID");
+            }
+            foreach (Books item in books)
+            {
+                if (id==item.ID)
+                {
+                    Console.WriteLine("Please enter new Book Name: ");
+                    item.Name=Console.ReadLine();
+                    check=true;
+                    return;
+                }
+            }
+            if (check==false)
+            {
+                Exceptions.NotFoundException(id);
+            }
+        }
+        
     }
 }
