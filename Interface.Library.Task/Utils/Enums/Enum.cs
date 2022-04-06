@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Utils.Enums
 {
-    internal class Enum
+    public class Enum
     {
+        public enum Role { admin = 1, member};
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Utils.Exceptions;
 
 namespace Interface.Library.Task.Models
 {
@@ -23,6 +24,33 @@ namespace Interface.Library.Task.Models
             books = new List<Books>();
             books.Capacity = BookLimit;
 
+        }
+
+        public void AddBook(Books book)
+        {
+            bool check = false;
+            foreach (Books item in books)
+            {
+                if (item.Name==book.Name && item.IsDeleted==true)
+                {
+                    Exceptions.AlreadyExistsException(item.Name, book.Name);
+                    check=true;
+                    return;
+                }
+                if (check == false)
+                {
+                    Console.WriteLine("The book addedd successfully");
+                    books.Add(book);
+                    Count++;
+                }
+                if (Count == BookLimit)        
+                {
+                    check = true;
+                    Exceptions.CapacityLimitException(BookLimit, Count);
+                    return;
+                }
+                
+            }
         }
     }
 }
